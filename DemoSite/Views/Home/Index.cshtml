@@ -1,0 +1,68 @@
+﻿@model List<Common.Models.PeopleViewModel>
+@{
+    ViewData["Title"] = "Home";
+    Layout = "_Layout";
+}
+
+<h2>Home</h2>
+@foreach (var item in Model)
+{
+    <h3>@item.Id</h3>
+    <p><span class="h4"><image src="@item.PictureMedium"></image> @item.FirstName @item.LastName</span> <span>@item.Gender</span></p>
+    <p><span>@item.Address</span></p>
+    <p><span>@item.Email</span></p>
+    <p>
+        <span style="white-space: pre-line">@item.Poem?.Content</span>
+    </p>
+    <p><span>Jaro–Winkler distance: @item.Poem?.Distance</span></p>
+    <hr />
+}
+<button class="btn btn-default" id="get-one">Get one</button>
+<button class="btn btn-default" id="get-one-mq">Get one MQ</button>
+<button class="btn btn-default" id="generate-report">Download report</button>
+
+@section Scripts {
+    <script>
+        const reload = () => window.location.reload();
+        const sendRequest = (url, method, successAction = reload) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, url, false);
+            xhr.send();
+            if (xhr.status !== 200) {
+                alert(xhr.status + ': ' + xhr.statusText);
+            } else if (successAction) {
+                successAction();
+            }
+        };
+        document.getElementById("get-one")
+            .addEventListener("click", () => sendRequest('api/Main/GetInfo', 'GET'));
+
+        document.getElementById("get-one-mq")
+            .addEventListener("click", () => sendRequest('api/Main/GetInfoMQ', 'GET'));
+
+        document.getElementById("generate-report")
+            .addEventListener("click", () => sendRequest('api/Main/GenerateReport', 'POST', null));
+    </script>
+
+    <script src="js/signalr.min.js"></script>
+    <script>
+        const { protocol, host } = location;
+        const homeUrl = `${protocol}//${host}`;
+
+        const url = `${homeUrl}/signalr/reports`;
+
+        const handleSend = (data) => {
+            const newTab = window.open();
+            newTab.location.href = data;
+            setTimeout(() => {
+                newTab.close();
+            }, 2000);
+        };
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl(url)
+            .build();
+        connection.on("Send", handleSend);
+        connection.start()
+            .catch(err => alert({ message: err, type: "error" }));
+    </script>
+}

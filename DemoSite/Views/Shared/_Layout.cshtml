@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>@ViewData["Title"]</title>
+        <link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
+    </head>
+    <body class="no-overflow">
+        <div class="identity-container">
+            <h1 class="identity-container__title">DemoSite</h1>
+                @RenderBody()
+        </div>
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
