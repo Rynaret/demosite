@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace People.EventHandlers
 {
-    public class PeopleGetInfoEventHandler : IIntegrationEventHandler<PeopleGetInfoEventContext>
+    public class CreatePersonEventHandler : IIntegrationEventHandler<CreatePersonEventContext>
     {
         private readonly ICommandBuilder commandBuilder;
         private readonly IEventBus eventBus;
 
-        public PeopleGetInfoEventHandler(ICommandBuilder commandBuilder, IEventBus eventBus)
+        public CreatePersonEventHandler(ICommandBuilder commandBuilder, IEventBus eventBus)
         {
             this.commandBuilder = commandBuilder;
             this.eventBus = eventBus;
         }
 
-        public async Task Handle(PeopleGetInfoEventContext @event)
+        public async Task Handle(CreatePersonEventContext @event)
         {
             var createUser = new CreateUserContext();
             await commandBuilder.ExecuteAsync(createUser);
@@ -25,7 +25,7 @@ namespace People.EventHandlers
             var setQuote = new SetQuoteContext(createUser.IdAfterCreate);
             await commandBuilder.ExecuteAsync(setQuote);
 
-            var getPoemEvent = new GetPoemEventContext(createUser.IdAfterCreate);
+            var getPoemEvent = new CreatePoemForPersonEventContext(createUser.IdAfterCreate);
             eventBus.Publish(getPoemEvent);
         }
     }

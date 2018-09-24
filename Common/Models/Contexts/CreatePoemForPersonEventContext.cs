@@ -1,8 +1,8 @@
 ﻿namespace Common.Models.Contexts
 {
-    public class GetPoemEventContext : IntegrationEvent
+    public class CreatePoemForPersonEventContext : IntegrationEvent
     {
-        public GetPoemEventContext(long personId)
+        public CreatePoemForPersonEventContext(long personId)
         {
             PersonId = personId;
         }

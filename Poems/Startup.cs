@@ -66,7 +66,7 @@ namespace Poems
             app.ConfigureOData(app.ApplicationServices);
 
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<GetPoemEventContext, GetPoemEventHandler>();
+            eventBus.Subscribe<CreatePoemForPersonEventContext, CreatePoemForPersonEventHandler>();
         }
     }
 }

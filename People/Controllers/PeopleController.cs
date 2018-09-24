@@ -33,7 +33,7 @@ namespace People.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> GetInfo()
+        public async Task<IActionResult> CreatePerson()
         {
             var createUser = new CreateUserContext();
             await commandBuilder.ExecuteAsync(createUser);
@@ -42,7 +42,7 @@ namespace People.Controllers
             await commandBuilder.ExecuteAsync(setQuote);
 
             await httpClientFactory.CreateClient(HttpClientNames.PoemService)
-                .PostAsync($"api/GetPoem/{createUser.IdAfterCreate}", null);
+                .PostAsync($"api/CreatePoemForPerson/{createUser.IdAfterCreate}", null);
 
             return Ok();
         }

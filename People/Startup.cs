@@ -77,7 +77,7 @@ namespace People
             app.ConfigureOData(app.ApplicationServices);
 
             var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
-            eventBus.Subscribe<PeopleGetInfoEventContext, PeopleGetInfoEventHandler>();
+            eventBus.Subscribe<CreatePersonEventContext, CreatePersonEventHandler>();
         }
     }
 }

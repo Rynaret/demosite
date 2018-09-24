@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Poems.EventHandlers
 {
-    public class GetPoemEventHandler : IIntegrationEventHandler<GetPoemEventContext>
+    public class CreatePoemForPersonEventHandler : IIntegrationEventHandler<CreatePoemForPersonEventContext>
     {
         private readonly ICommandBuilder commandBuilder;
 
-        public GetPoemEventHandler(ICommandBuilder commandBuilder)
+        public CreatePoemForPersonEventHandler(ICommandBuilder commandBuilder)
         {
             this.commandBuilder = commandBuilder;
         }
 
-        public async Task Handle(GetPoemEventContext @event)
+        public async Task Handle(CreatePoemForPersonEventContext @event)
         {
             var createPoem = new CreatePoemContext(@event.PersonId);
             await commandBuilder.ExecuteAsync(createPoem);

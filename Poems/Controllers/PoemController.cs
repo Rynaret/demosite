@@ -26,7 +26,7 @@ namespace Poems.Controllers
         }
 
         [HttpPost("[action]/{personId:long}")]
-        public async Task<IActionResult> GetPoem(long personId)
+        public async Task<IActionResult> CreatePoemForPerson(long personId)
         {
             var createPoem = new CreatePoemContext(personId);
             await commandBuilder.ExecuteAsync(createPoem);

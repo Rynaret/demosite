@@ -30,14 +30,14 @@ namespace DemoSite.Controllers
         [HttpGet("[action]")]
         public async Task<IActionResult> GetInfo()
         {
-            await httpClientFactory.CreateClient(HttpClientNames.PeopleService).PostAsync("api/GetInfo", null);
+            await httpClientFactory.CreateClient(HttpClientNames.PeopleService).PostAsync("api/CreatePerson", null);
             return Ok();
         }
 
         [HttpGet("[action]")]
         public IActionResult GetInfoMQ()
         {
-            var @event = new PeopleGetInfoEventContext();
+            var @event = new CreatePersonEventContext();
             eventBus.Publish(@event);
             return Ok();
         }
